@@ -30,7 +30,7 @@ function Piece(selector, player, piece){
 
     setpos(0)
 
-    return {
+    piece = {
 
         get position(){ return position },
         set position(v){
@@ -45,6 +45,10 @@ function Piece(selector, player, piece){
         }
 
     }
+
+    div.piece = piece
+
+    return piece
 
 }
 
@@ -79,20 +83,20 @@ function Dice(divclass){
         run(resolve, reject){
             return new Promise((resolve, reject) => {
                 div.classList.add('running')
-                div.style.animationDuration = randNumber(0.2, 0.6) + 's'
-                let counter = randInt(6, 11)
+                div.style.animationDuration = randNumber(0.2, 0.5) + 's'
+                let counter = randInt(2, 7)
                 let total = this.animateDice(counter)
                 setTimeout(()=>{
                     resolve(position)
                     div.classList.remove('running')
-                },total+100)
+                },total+50)
             })
         },
 
         animateDice(counter){
-            let total = 300
+            let total = 100
             for(let i=0; i < counter; i++){
-                total += randInt(150, 450)
+                total += randInt(50, 100)
                 setTimeout(()=>{
                     this.position++
                 },total)
@@ -120,9 +124,9 @@ function DiceRow(divclass, dices){
             return dices.map(d => d.value).reduce((a, b) => a + b)
         },
 
-        run(){
-            let p = Promise.all(dices.map(d => d.run()))
-            return p
+        async run(){
+            let p = await Promise.all(dices.map(d => d.run()))
+            return this.total
         },
 
     }
@@ -135,7 +139,7 @@ function DiceRow(divclass, dices){
 
 let game = {
 
-    players: [0, 1].map(
+    pieces: [0, 1].map(
         player => [0,1,2,3,4,5,6].map(
             piece => Piece(`.p${player+1}.piece${piece}`, player, piece)
         )

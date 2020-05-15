@@ -125,8 +125,8 @@ body {
     border-right:10px solid transparent;
     display:none;
 }
-.dice.p2 { top:-180px; }
-.dice.p1 { top:380px; }
+.dice.p2 { top:380px; }
+.dice.p1 { top:-180px; }
 .dice.dice0 {right: 0px;}
 .dice.dice1 {right: 80px;}
 .dice.dice2 {right: 160px;}
@@ -151,8 +151,8 @@ body {
     left:10px;
 }
 
-.dice.p1 { border-bottom-color:#099; }
-.dice.p2 { border-bottom-color:#990; }
+.dice.p2 { border-bottom-color:#099; }
+.dice.p1 { border-bottom-color:#990; }
 
 .dicesum {
     position:absolute;
@@ -161,11 +161,11 @@ body {
     right:300px;
 }
 .dicesum.p1 {
-    color:#0ff;
-    top:380px;
-}
-.dicesum.p2 {
     color:#ff0;
     top:-180px;
+}
+.dicesum.p2 {
+    color:#0ff;
+    top:380px;
 }
 
