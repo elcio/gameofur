@@ -86,6 +86,15 @@ body {
     border-right:30px solid transparent;
     cursor:pointer;
 }
+@keyframes dicerunning {
+    0% { transform:rotate(0deg); }
+    100% { transform:rotate(360deg); }
+}
+.dice.running {
+    animation-name:dicerunning;
+    animation-duration: 0.4s;
+    animation-iteration-count: infinite;
+}
 .dice::before {
     content:" ";
     position:absolute;
