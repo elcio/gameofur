@@ -89,14 +89,14 @@ function Dice(divclass){
                 setTimeout(()=>{
                     resolve(position)
                     div.classList.remove('running')
-                },total+50)
+                },total+25)
             })
         },
 
         animateDice(counter){
-            let total = 100
+            let total = 50
             for(let i=0; i < counter; i++){
-                total += randInt(50, 100)
+                total += randInt(25, 50)
                 setTimeout(()=>{
                     this.position++
                 },total)
@@ -153,6 +153,19 @@ let game = {
             )
         )
     ),
+
+    setWinner(winner){
+        if(winner){
+            document.querySelector('#winner').innerHTML = winner
+            document.querySelector('.message').classList.add('on')
+        }else{
+            document.querySelector('.message').classList.remove('on')
+        }
+    },
+
+    get players(){
+        return Array.from(document.querySelectorAll('.players select')).map(s => s.selectedIndex)
+    },
 
 }
 

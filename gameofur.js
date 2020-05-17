@@ -12,6 +12,10 @@ function GameOfUr(gametable){
             this.highlightPossible(steps)
         },
 
+        get turn(){
+            return turn
+        },
+
         nextTurn(){
             turn = (turn + 1) % 2
             setTimeout(()=>{
@@ -21,16 +25,21 @@ function GameOfUr(gametable){
 
         highlightPossible(steps){
             let possible = false
+            this.possibleMoves=[0,0,0,0,0,0,0]
             if(steps){
-                this.table.pieces[turn].forEach(piece => {
+                this.table.pieces[turn].forEach((piece, idx) => {
                     piece.active = this.canRun(piece.position + steps)
                     if(piece.active){
+                        this.possibleMoves[idx]=1
                         possible = true
                     }
                 })
             }
             if(!possible){
                 this.nextTurn()
+            }else if(this.table.players[turn]){
+                let movement = urengine(this.table.players[turn], steps, this)
+                this.move(this.table.pieces[turn][movement])
             }
         },
 
@@ -81,6 +90,10 @@ function GameOfUr(gametable){
 
             piece.position = targetPosition
 
+            if(this.table.pieces[turn].every(p => p.position == 15)){
+                return this.table.setWinner(turn+1)
+            }
+
             if(piece.position == 4 || piece.position == 8 || piece.position == 14){
                 return setTimeout(()=>{
                     this.doTurn()
@@ -91,6 +104,12 @@ function GameOfUr(gametable){
 
         },
 
+        newGame(){
+            this.table.pieces.flat().forEach(p => p.position=0)
+            this.table.setWinner(0)
+            this.nextTurn()
+        },
+
     }
 
     document.querySelectorAll('.piece').forEach(piece => {
@@ -99,6 +118,10 @@ function GameOfUr(gametable){
                 game.move(piece.piece)
             }
         })
+    })
+
+    document.querySelector('.message button').addEventListener('click', ev => {
+        game.newGame()
     })
 
     return game
